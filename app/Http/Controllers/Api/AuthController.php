@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function login(LoginRequest $request){
-      $data= $request-> validated();
+   public function signup(SignupRequest $request){
+         $data= $request-> validated();
     /** @var \App\Models\User $user */
       $user= User::create([
         'name'=> $data['name'],
@@ -17,15 +17,25 @@ class AuthController extends Controller
       ]);
       $token = $user->createToken(name: 'main')->plainTextToken;
 
-      return response([
-        'user' =>$user,
-        'token' =>$token,
-    ]);
+      return response(compact('user', 'token'));
     }
-    public function signup(SignupRequest $request){
 
+     public function login(LoginRequest $request){
+     $credentials = $request->validated();
+     if(!Auth::attempt($credentials)){
+        return response([
+            'message'=> 'Provided email address or password is incorrect'
+        ]);
+     }
+     /** @var User $user */
+     $user=Auth::user();
+     $token= $user->createToken('main')->plainTextToken;
     }
+
     public function logout(Request $request){
+        /** @var User $user */
+        $user= $request->user();
+        $user->currentAccessToken()->delete();
 
     }
 }
