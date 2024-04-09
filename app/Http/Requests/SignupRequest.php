@@ -22,7 +22,11 @@ class SignupRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+        'name'=> 'required|string|max:55',
+        'email'=> 'required|email|max:75|unique:users,email',
+        'pasword'=> [
+            'required','confirmed', Password::min(6)->letters()
+            ->symbols()]
         ];
     }
 }
