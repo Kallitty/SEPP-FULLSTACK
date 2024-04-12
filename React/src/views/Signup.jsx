@@ -37,7 +37,7 @@ export default function Signup() {
             <div className="form">
                 <form onSubmit={onSubmit}>
                     <h1 className="title">Signup for free.</h1>
-                    <input ref={nameRef} type="text" placeholder="Full name" />
+                    <input ref={nameRef} placeholder="Full name" />
                     <input ref={emailRef} type="email" placeholder="Email" />
                     <input
                         ref={passwordRef}
