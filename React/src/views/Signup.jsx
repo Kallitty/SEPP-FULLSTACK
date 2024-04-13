@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import axiosClient from "../axios-client";
@@ -9,6 +10,7 @@ export default function Signup() {
     const emailRef = useRef();
     const passwordRef = useRef();
     const passwordConfirmationRef = useRef();
+    const [errors, setErrors] = useState("null");
     const { setUser, setToken } = useStateContext();
 
     const onSubmit = (e) => {
@@ -29,7 +31,6 @@ export default function Signup() {
                 setToken(data.token);
             })
             .catch((err) => {
-                console.log(err);
                 const response = err.response;
                 if (response && response.status === 422) {
                     console.log(response.data.errors);
