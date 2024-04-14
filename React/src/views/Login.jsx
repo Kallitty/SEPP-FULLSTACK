@@ -1,5 +1,8 @@
 import React from "react";
+import { useState } from "react";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
+import axiosClient from "../axios-client";
 import { useStateContext } from "../contexts/ContextProvider";
 
 export default function Login() {
@@ -33,6 +36,14 @@ export default function Login() {
             <div className="form">
                 <form onSubmit={onSubmit}>
                     <h1 className="title">Login to your account.</h1>
+
+                    {errors && (
+                        <div className="alert">
+                            {Object.keys(errors).map((key) => (
+                                <p key={key}>{errors[key][0]}</p>
+                            ))}
+                        </div>
+                    )}
                     <input ref={emailRef} type="email" placeholder="Email" />
                     <input
                         ref={passwordRef}
