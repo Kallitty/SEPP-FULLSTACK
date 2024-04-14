@@ -33,8 +33,12 @@ export default function Login() {
             <div className="form">
                 <form onSubmit={onSubmit}>
                     <h1 className="title">Login to your account.</h1>
-                    <input type="email" placeholder="Email" />
-                    <input type="password" placeholder="Password" />
+                    <input ref={emailRef} type="email" placeholder="Email" />
+                    <input
+                        ref={passwordRef}
+                        type="password"
+                        placeholder="Password"
+                    />
                     <button className="btn btn-block">Login</button>
                     <p className="message">
                         Not Registered?{" "}
