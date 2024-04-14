@@ -1,11 +1,32 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useStateContext } from "../contexts/ContextProvider";
 
 export default function Login() {
     const emailRef = useRef();
     const passwordRef = useRef();
+    const [errors, setErrors] = useState("");
+    const { setUser, setToken } = useStateContext();
+
     const onSubmit = (e) => {
         e.preventDefault();
+        const payload = {
+            email: emailRef.current.value,
+            password: passwordRef.current.value,
+        };
+
+        axiosClient
+            .post("/signup", payload)
+            .then(({ data }) => {
+                setUser(data.user);
+                setToken(data.token);
+            })
+            .catch((err) => {
+                const response = err.response;
+                if (response && response.status === 422) {
+                    setErrors(response.data.errors);
+                }
+            });
     };
     return (
         <div className="login-signup-form animated fadeInDown">
