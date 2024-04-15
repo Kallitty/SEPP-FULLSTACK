@@ -12,6 +12,10 @@ export default function DefaultLayout() {
     }
     const onLogout = (e) => {
         e.preventDefault();
+        axiosClient.get("/logout").then(({}) => {
+            setUser({});
+            setToken({});
+        });
     };
 
     useEffect(() => {
